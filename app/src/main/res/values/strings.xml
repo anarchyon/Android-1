@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Android-1</string>
+    <string name="edit_text_hint">Введите текст</string>
+    <string name="checkbox_concat">Конкатенация</string>
+    <string name="checkbox_invert">Задом-наперед</string>
+    <string name="radio_sum">Сложить</string>
+    <string name="radio_diff">Вычесть</string>
+    <string name="button_execute">Выполнить</string>
 </resources>
