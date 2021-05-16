@@ -80,7 +80,7 @@
     <ToggleButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/toggle_calc"
+        android:id="@+id/toggle_mode"
         android:textOn="@string/toggle_text_on"
         android:textOff="@string/toggle_text_off"/>
     <Button
@@ -104,6 +104,7 @@
         android:layout_height="wrap_content"
         android:text="@string/switch_show"/>
     <CalendarView
+        android:id="@+id/calendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible"/>
