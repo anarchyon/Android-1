@@ -42,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
         calendarView.setVisibility(View.INVISIBLE);
 
         toggleButtonMode.setOnCheckedChangeListener((button, b) -> changeMode());
-        switchMaterialCalendar.setOnCheckedChangeListener((button, b) -> changeCalendarVisibility(b));
+        switchMaterialCalendar.setOnCheckedChangeListener(
+                (button, b) -> changeCalendarVisibility(b));
+        buttonExecute.setOnClickListener(button -> execute());
     }
 
     private void findView() {
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         mode = !mode;
         editTextLeft.setText("");
         editTextRight.setText("");
+        textViewResult.setText("");
         if (mode == CALC_MODE) {
             editTextLeft.setInputType(InputType.TYPE_CLASS_NUMBER);
             editTextRight.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -81,6 +84,33 @@ public class MainActivity extends AppCompatActivity {
             calendarView.setVisibility(View.VISIBLE);
         } else {
             calendarView.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void execute() {
+        if (mode == TEXT_MODE) {
+            StringBuilder text = new StringBuilder(editTextLeft.getText());
+            if (checkBoxConcat.isChecked()) {
+                text.append(editTextRight.getText());
+            }
+            if (checkBoxInvert.isChecked()) {
+                text.reverse();
+            }
+            textViewResult.setText(text);
+        } else if (mode == CALC_MODE) {
+            double result = 0;
+            double num1 = 0;
+            double num2 = 0;
+            String text1 = String.valueOf(editTextLeft.getText());
+            String text2 = String.valueOf(editTextRight.getText());
+            if (!text1.equals("")) num1 = Integer.parseInt(text1);
+            if (!text2.equals("")) num2 = Integer.parseInt(text2);
+            if (radioButtonSum.isChecked()) {
+                result = num1 + num2;
+            } else if (radioButtonDiff.isChecked()) {
+                result = num1 - num2;
+            }
+            textViewResult.setText(String.valueOf(result));
         }
     }
 }
