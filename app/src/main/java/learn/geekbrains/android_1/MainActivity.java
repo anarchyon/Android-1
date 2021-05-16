@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CheckBox;
@@ -38,8 +39,10 @@ public class MainActivity extends AppCompatActivity {
         mode = TEXT_MODE;
 
         findView();
+        calendarView.setVisibility(View.INVISIBLE);
 
         toggleButtonMode.setOnCheckedChangeListener((button, b) -> changeMode());
+        switchMaterialCalendar.setOnCheckedChangeListener((button, b) -> changeCalendarVisibility(b));
     }
 
     private void findView() {
@@ -70,6 +73,14 @@ public class MainActivity extends AppCompatActivity {
         } else if (mode == TEXT_MODE) {
             editTextLeft.setInputType(InputType.TYPE_CLASS_TEXT);
             editTextRight.setInputType(InputType.TYPE_CLASS_TEXT);
+        }
+    }
+
+    private void changeCalendarVisibility(boolean state) {
+        if (state) {
+            calendarView.setVisibility(View.VISIBLE);
+        } else {
+            calendarView.setVisibility(View.INVISIBLE);
         }
     }
 }
