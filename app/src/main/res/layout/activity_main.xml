@@ -64,24 +64,48 @@
                     android:id="@+id/radio_sum"
                     android:text="@string/radio_sum"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:enabled="false"/>
                 <RadioButton
                     android:id="@+id/radio_diff"
                     android:text="@string/radio_diff"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:enabled="false"/>
             </RadioGroup>
         </LinearLayout>
     </LinearLayout>
 
+    <ToggleButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toggle_calc"
+        android:textOn="@string/toggle_text_on"
+        android:textOff="@string/toggle_text_off"/>
     <Button
         android:id="@+id/button_execute"
         android:text="@string/button_execute"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/result_title"
+        android:textSize="20dp"
+        android:textColor="@color/design_default_color_primary_dark"/>
+    <TextView
         android:id="@+id/text_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch_calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/switch_show"/>
+    <CalendarView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"/>
 
 </LinearLayout>

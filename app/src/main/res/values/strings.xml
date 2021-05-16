@@ -6,4 +6,8 @@
     <string name="radio_sum">Сложить</string>
     <string name="radio_diff">Вычесть</string>
     <string name="button_execute">Выполнить</string>
+    <string name="result_title">Результат:</string>
+    <string name="toggle_text_on">Режим калькулятора</string>
+    <string name="toggle_text_off">Текстовый режим</string>
+    <string name="switch_show">Отобразить календарь</string>
 </resources>
