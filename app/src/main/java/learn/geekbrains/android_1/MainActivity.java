@@ -3,6 +3,7 @@ package learn.geekbrains.android_1;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CheckBox;
@@ -61,5 +62,14 @@ public class MainActivity extends AppCompatActivity {
         radioButtonSum.setEnabled(!radioButtonSum.isEnabled());
         radioButtonDiff.setEnabled(!radioButtonDiff.isEnabled());
         mode = !mode;
+        editTextLeft.setText("");
+        editTextRight.setText("");
+        if (mode == CALC_MODE) {
+            editTextLeft.setInputType(InputType.TYPE_CLASS_NUMBER);
+            editTextRight.setInputType(InputType.TYPE_CLASS_NUMBER);
+        } else if (mode == TEXT_MODE) {
+            editTextLeft.setInputType(InputType.TYPE_CLASS_TEXT);
+            editTextRight.setInputType(InputType.TYPE_CLASS_TEXT);
+        }
     }
 }
