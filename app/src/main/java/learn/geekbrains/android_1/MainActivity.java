@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -18,8 +18,8 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final boolean CALC_MODE = true;
-    private static final boolean TEXT_MODE = false;
+    private static final int CALC_MODE = 1;
+    private static final int TEXT_MODE = 0;
 
     private EditText editTextLeft, editTextRight;
     private CheckBox checkBoxConcat, checkBoxInvert;
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private SwitchMaterial switchMaterialCalendar;
     private CalendarView calendarView;
 
-    private boolean mode;
+    private int mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +38,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mode = TEXT_MODE;
 
-        findView();
+        init();
         calendarView.setVisibility(View.INVISIBLE);
 
         toggleButtonMode.setOnCheckedChangeListener((button, b) -> changeMode());
         switchMaterialCalendar.setOnCheckedChangeListener(
                 (button, b) -> changeCalendarVisibility(b));
-        buttonExecute.setOnClickListener(button -> execute());
+        buttonExecute.setOnClickListener(button -> executeOperationWithInputData());
     }
 
-    private void findView() {
+    private void init() {
         editTextLeft = findViewById(R.id.editTextLeft);
         editTextRight = findViewById(R.id.editTextRight);
         checkBoxConcat = findViewById(R.id.checkbox_concat);
@@ -62,21 +62,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changeMode() {
-        checkBoxConcat.setEnabled(!checkBoxConcat.isEnabled());
-        checkBoxInvert.setEnabled(!checkBoxInvert.isEnabled());
-        radioButtonSum.setEnabled(!radioButtonSum.isEnabled());
-        radioButtonDiff.setEnabled(!radioButtonDiff.isEnabled());
-        mode = !mode;
+        if (toggleButtonMode.isChecked()) mode = CALC_MODE;
+        else mode = TEXT_MODE;
+        switch (mode) {
+            case TEXT_MODE:
+                checkBoxConcat.setEnabled(true);
+                checkBoxInvert.setEnabled(true);
+                radioButtonSum.setEnabled(false);
+                radioButtonDiff.setEnabled(false);
+                editTextLeft.setInputType(InputType.TYPE_CLASS_TEXT);
+                editTextRight.setInputType(InputType.TYPE_CLASS_TEXT);
+                break;
+            case CALC_MODE:
+                checkBoxConcat.setEnabled(false);
+                checkBoxInvert.setEnabled(false);
+                radioButtonSum.setEnabled(true);
+                radioButtonDiff.setEnabled(true);
+                editTextLeft.setInputType(InputType.TYPE_CLASS_NUMBER);
+                editTextRight.setInputType(InputType.TYPE_CLASS_NUMBER);
+                break;
+        }
         editTextLeft.setText("");
         editTextRight.setText("");
         textViewResult.setText("");
-        if (mode == CALC_MODE) {
-            editTextLeft.setInputType(InputType.TYPE_CLASS_NUMBER);
-            editTextRight.setInputType(InputType.TYPE_CLASS_NUMBER);
-        } else if (mode == TEXT_MODE) {
-            editTextLeft.setInputType(InputType.TYPE_CLASS_TEXT);
-            editTextRight.setInputType(InputType.TYPE_CLASS_TEXT);
-        }
     }
 
     private void changeCalendarVisibility(boolean state) {
@@ -87,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void execute() {
+    private void executeOperationWithInputData() {
         if (mode == TEXT_MODE) {
             StringBuilder text = new StringBuilder(editTextLeft.getText());
             if (checkBoxConcat.isChecked()) {
@@ -103,8 +111,12 @@ public class MainActivity extends AppCompatActivity {
             double num2 = 0;
             String text1 = String.valueOf(editTextLeft.getText());
             String text2 = String.valueOf(editTextRight.getText());
-            if (!text1.equals("")) num1 = Integer.parseInt(text1);
-            if (!text2.equals("")) num2 = Integer.parseInt(text2);
+            try {
+                if (!text1.isEmpty()) num1 = Integer.parseInt(text1);
+                if (!text2.isEmpty()) num2 = Integer.parseInt(text2);
+            } catch (NumberFormatException e) {
+                Log.d("Input", "Error input");
+            }
             if (radioButtonSum.isChecked()) {
                 result = num1 + num2;
             } else if (radioButtonDiff.isChecked()) {
